@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jasmine Singla | Creative Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Fira+Mono&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent: #ff6f61;
+      --bg: linear-gradient(135deg, #f3eafd 0%, #e0c3fc 100%);
+      --card: #fff;
+      --text: #1a0036;
+      --shadow: 0 8px 32px rgba(80,0,120,0.12);
+      --radius: 18px;
+      --transition: all 0.4s cubic-bezier(.77,0,.18,1);
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(120deg, #f3eafd, #e0c3fc, #b39ddb, #ff6f61, #f3eafd);
+      background-size: 400% 400%;
+      animation: gradientBG 18s ease-in-out infinite;
+      color: var(--text);
+      min-height: 100vh;
+      scroll-behavior: smooth;
+    }
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+    .glass {
+      background: rgba(255,255,255,0.7);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      backdrop-filter: blur(8px);
+      padding: 2.5rem 2rem;
+      margin: 2rem auto;
+      max-width: 900px;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(60px) scale(0.98);
+      transition: opacity 1s cubic-bezier(.77,0,.18,1), transform 1s cubic-bezier(.77,0,.18,1);
+    }
+    section.glass.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    header.hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      background: linear-gradient(120deg, #b39ddb 0%, #ff6f61 100%);
+      color: #fff;
+      border-radius: 0 0 60px 60px;
+      box-shadow: 0 8px 32px rgba(80,0,120,0.18);
+      position: relative;
+      overflow: hidden;
+    }
+    header.hero h1 {
+      font-size: 3.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.12);
+    }
+    header.hero .subtitle {
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin-bottom: 2.5rem;
+      letter-spacing: 1px;
+      overflow: hidden;
+      white-space: nowrap;
+      display: inline-block;
+      min-height: 2.2em;
+      color: #fff;
+      position: relative;
+    }
+    .subtitle-typing {
+      border-right: 2px solid #fff;
+      animation: blink-caret 0.8s step-end infinite;
+    }
+    @keyframes blink-caret {
+      0%, 100% { border-color: #fff; }
+      50% { border-color: transparent; }
+    }
+    nav.creative-nav {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+      background: rgba(255,255,255,0.5);
+      border-radius: 50px;
+      box-shadow: 0 2px 12px rgba(80,0,120,0.08);
+      padding: 0.7rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(6px);
+    }
+    nav.creative-nav a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+      padding: 0.5rem 1.2rem;
+      border-radius: 30px;
+      transition: var(--transition);
+      background: transparent;
+    }
+    nav.creative-nav a.active, nav.creative-nav a:hover {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(255,111,97,0.12);
+      transform: scale(1.08);
+    }
+    section {
+      margin-bottom: 2.5rem;
+    }
+    h2.section-title {
+      font-size: 2.2rem;
+      color: var(--accent);
+      margin-bottom: 1.2rem;
+      text-align: center;
+      letter-spacing: 1px;
+      position: relative;
+    }
+    h2.section-title::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 4px;
+      background: var(--accent);
+      margin: 0.5rem auto 0 auto;
+      border-radius: 2px;
+      opacity: 0.5;
+    }
+    .about-text {
+      font-size: 1.18rem;
+      line-height: 1.7;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      min-height: 120px;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s cubic-bezier(.77,0,.18,1), transform 0.7s cubic-bezier(.77,0,.18,1);
+    }
+    .about-text.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .about-gradient {
+      background: linear-gradient(90deg, #ff6f61 0%, #b39ddb 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+      font-weight: 600;
+      transition: background 0.5s;
+    }
+    .project-switcher {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .switch-btn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 30px;
+      padding: 0.7rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      animation: pulse 2.5s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255,111,97,0.2); }
+      50% { box-shadow: 0 0 0 12px rgba(255,111,97,0.08); }
+    }
+    .switch-btn:hover {
+      background: rgba(255, 111, 97, 0.9);
+      transform: scale(1.05);
+    }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .project-card {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: 0 4px 16px rgba(80,0,120,0.1);
+      padding: 1.5rem;
+      transition: transform 0.4s cubic-bezier(.77,0,.18,1), box-shadow 0.4s cubic-bezier(.77,0,.18,1);
+    }
+    .project-card:hover {
+      transform: translateY(-12px) scale(1.04) rotateZ(-1deg);
+      box-shadow: 0 12px 40px rgba(80,0,120,0.18);
+    }
+    .project-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+    .project-card ul {
+      list-style: disc;
+      padding-left: 1.2rem;
+      margin-bottom: 1.5rem;
+      color: #333;
+    }
+    .project-card a {
+      display: inline-block;
+      text-decoration: none;
+      color: #fff;
+      background: var(--accent);
+      padding: 0.7rem 1.2rem;
+      border-radius: 30px;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .project-card a:hover {
+      background: rgba(255, 111, 97, 0.9);
+      transform: scale(1.05);
+    }
+    .contact-section {
+      text-align: center;
+    }
+    .contact-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      font-size: 1.1rem;
+    }
+    .contact-list li {
+      margin-bottom: 1rem;
+    }
+    .contact-link {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    .contact-link:hover {
+      color: rgba(255, 111, 97, 0.9);
+    }
+    footer {
+      text-align: center;
+      padding: 1.5rem 0;
+      font-size: 0.9rem;
+      color: #666;
+    }
+    @media (max-width: 700px) {
+      .glass { padding: 1.2rem 0.7rem; }
+      header.hero h1 { font-size: 2.1rem; }
+      nav.creative-nav { gap: 1rem; padding: 0.5rem 0.5rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+    }
+    /* Floating bubbles */
+    .bubble {
+      position: fixed;
+      border-radius: 50%;
+      opacity: 0.13;
+      pointer-events: none;
+      z-index: 0;
+      animation: floatBubble 18s linear infinite;
+    }
+    @keyframes floatBubble {
+      0% { transform: translateY(0) scale(1); }
+      100% { transform: translateY(-120vh) scale(1.2); }
+    }
+    .project-image {
+      width: 100%;
+      max-height: 160px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 12px rgba(80,0,120,0.08);
+      background: #eee;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+    <div id="bubbles"></div>
+  <header class="hero">
+    <div class="shape shape1"></div>
+    <div class="shape shape2"></div>
+    <div class="shape shape3"></div>
+    <h1>Jasmine Singla</h1>
+    <div class="subtitle"><span id="subtitleText" class="subtitle-typing"></span></div>
+    <nav class="creative-nav">
+      <a href="#about" class="active">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+  <main>
+    <section id="about" class="glass">
+      <h2 class="section-title">About Me</h2>
+      <div class="about-text" id="aboutText">
+        <span class="about-gradient">Hello! I am a full-stack web developer with a strong passion for combining Artificial Intelligence (AI) and web development to create impactful, user-friendly applications.</span> With an MSc in Artificial Intelligence from the University of Essex, I have developed expertise in <span class="about-gradient">machine learning models, natural language processing</span>, and more. I am looking for opportunities to apply my skills in full-stack development and AI to build <span class="about-gradient">innovative web apps</span> that solve real-world problems.
+      </div>
+    </section>
+    <section id="projects" class="glass">
+      <h2 class="section-title">Projects</h2>
+      <div class="project-switcher">
+        <button class="switch-btn active" id="btn-aiml">AI/ML Projects</button>
+        <button class="switch-btn" id="btn-fullstack">Full Stack Web Developer Projects</button>
+      </div>
+      <div id="aiml-projects" class="projects-grid">
+        <div class="project-card">
+          <img src="https://via.placeholder.com/400x160?text=Solar+LSTM" alt="Solar Energy Output Prediction" class="project-image">
+          <h3>Solar Energy Output Prediction Using LSTM Models</h3>
+          <ul>
+            <li>Designed and implemented an LSTM model to predict 24-hour solar energy output using historical weather data from Brighton (2010–2024). Achieved an R² value of 0.83, providing insights for energy surplus distribution via SEG (Smart Export Guarantee).</li>
+          </ul>
+          <a href="#" target="_blank">View on GitHub</a>
+        </div>
+        <div class="project-card">
+          <img src="https://via.placeholder.com/400x160?text=EEG+CNN" alt="EEG-based Mental Workload Classifier" class="project-image">
+          <h3>EEG-based Mental Workload Classifier</h3>
+          <ul>
+            <li>Designed a CNN model to classify EEG signals from 62 channels with an accuracy of 71.67%. Compared CNN’s performance with logistic regression for mental workload classification.</li>
+          </ul>
+          <a href="#" target="_blank">View on GitHub</a>
+        </div>
+        <div class="project-card">
+          <img src="https://via.placeholder.com/400x160?text=NLP+Sentiment" alt="NLP-Based Sentiment Analysis" class="project-image">
+          <h3>NLP-Based Sentiment Analysis on Dream Narratives</h3>
+          <ul>
+            <li>Developed an NLP-based model for sentiment analysis of dream-related text using machine learning and lexicon tools. Performed extensive preprocessing and feature engineering on dream narratives.</li>
+          </ul>
+          <a href="#" target="_blank">View on GitHub</a>
+        </div>
+      </div>
+      <div id="fullstack-projects" class="projects-grid" style="display:none;">
+        <div class="project-card">
+          <img src="https://via.placeholder.com/400x160?text=QuickRead+OCR" alt="QuickRead: OCR-Powered AI Book Summarizer" class="project-image">
+          <h3>QuickRead: OCR-Powered AI Book Summarizer with Voice Integration</h3>
+          <ul>
+            <li>Designed an AI-powered book summarizer that converts book images into text summaries and reads them aloud using AWS Polly and Google TTS.</li>
+          </ul>
+          <a href="#" target="_blank">View on GitHub</a>
+        </div>
+        <div class="project-card">
+          <img src="https://via.placeholder.com/400x160?text=Chatbot+Movies" alt="Interactive Chatbot for Personalized Movie Recommendations" class="project-image">
+          <h3>Interactive Chatbot for Personalized Movie Recommendations</h3>
+          <ul>
+            <li>Developed a chatbot that recommends movies based on user-input genres using AJAX for real-time interaction.</li>
+          </ul>
+          <a href="#" target="_blank">View on GitHub</a>
+        </div>
+        <div class="project-card">
+          <img src="https://via.placeholder.com/400x160?text=Weather+Website" alt="Context-Aware Weather Website" class="project-image">
+          <h3>Context-Aware Weather Website with Outfit and Activity Suggestions</h3>
+          <ul>
+            <li>Built a weather website that provides outfit and activity recommendations based on real-time weather data using Google and Open-Meteo APIs.</li>
+          </ul>
+          <a href="#" target="_blank">View on GitHub</a>
+        </div>
+      </div>
+    </section>
+    <section id="contact" class="glass contact-section">
+      <h2 class="section-title">Contact</h2>
+      <p style="font-size:1.15rem;">Feel free to reach out for collaborations or queries:</p>
+      <ul class="contact-list">
+        <li><strong>Email:</strong> <a href="mailto:jasmineisngla652@gmail.com" class="contact-link">jasmineisngla652@gmail.com</a></li>
+        <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/jasmine-singla-b96b3b302" target="_blank" class="contact-link">linkedin.com/in/jasmine-singla-b96b3b302</a></li>
+        <li><strong>GitHub:</strong> <span class="contact-link" style="cursor:pointer;">Coming soon</span></li>
+      </ul>
+    </section>
+  </main>
+  <footer>
+    &copy; 2025 Jasmine Singla. All Rights Reserved.
+  </footer>
+  <script>
+    // Navigation highlight on scroll
+    const navLinks = document.querySelectorAll('.creative-nav a');
+    const sections = document.querySelectorAll('main section');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 80;
+        if (pageYOffset >= sectionTop) {
+          current = section.getAttribute('id');
+        }
+      });
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href').slice(1) === current) {
+          link.classList.add('active');
+        }
+      });
+    });
+    // Project switcher
+    const btnAiml = document.getElementById('btn-aiml');
+    const btnFullstack = document.getElementById('btn-fullstack');
+    const aimlProjects = document.getElementById('aiml-projects');
+    const fullstackProjects = document.getElementById('fullstack-projects');
+    btnAiml.onclick = function() {
+      aimlProjects.style.display = '';
+      fullstackProjects.style.display = 'none';
+      btnAiml.classList.add('active');
+      btnFullstack.classList.remove('active');
+    };
+    btnFullstack.onclick = function() {
+      aimlProjects.style.display = 'none';
+      fullstackProjects.style.display = '';
+      btnFullstack.classList.add('active');
+      btnAiml.classList.remove('active');
+    };
+    // Professional About Me fade-in effect
+    const aboutText = document.getElementById('aboutText');
+    const aboutSection = document.getElementById('about');
+    function handleAboutVisibility(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          aboutText.classList.add('visible');
+        } else {
+          aboutText.classList.remove('visible');
+        }
+      });
+    }
+    const observer = new window.IntersectionObserver(handleAboutVisibility, { threshold: 0.2 });
+    observer.observe(aboutSection);
+    // Ensure About Me is visible on load if already in viewport
+    window.addEventListener('DOMContentLoaded', () => {
+      const rect = aboutSection.getBoundingClientRect();
+      if (
+        rect.top < window.innerHeight &&
+        rect.bottom > 0
+      ) {
+        aboutText.classList.add('visible');
+      }
+    });
+    // Section fade/slide in on scroll
+    const glassSections = document.querySelectorAll('section.glass');
+    function handleSection(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }
+    const sectionObserver = new window.IntersectionObserver(handleSection, { threshold: 0.15 });
+    glassSections.forEach(sec => sectionObserver.observe(sec));
+    // Animated floating bubbles
+    function createBubbles() {
+      const colors = ['#ff6f61', '#b39ddb', '#e0c3fc', '#fff', '#18013c'];
+      const bubbles = document.getElementById('bubbles');
+      for (let i = 0; i < 18; i++) {
+        const b = document.createElement('div');
+        b.className = 'bubble';
+        const size = 40 + Math.random()*80;
+        b.style.width = b.style.height = size + 'px';
+        b.style.left = Math.random()*100 + 'vw';
+        b.style.bottom = (-Math.random()*40) + 'vh';
+        b.style.background = colors[Math.floor(Math.random()*colors.length)];
+        b.style.animationDuration = (12+Math.random()*12) + 's';
+        b.style.animationDelay = (-Math.random()*18) + 's';
+        bubbles.appendChild(b);
+      }
+    }
+    createBubbles();
+    // Animated subtitle typing effect
+    const subtitleText = document.getElementById('subtitleText');
+    const subtitlePhrases = [
+      'Aspiring Full-Stack Developer',
+      'AI/ML Engineer',
+      'Data Scientist'
+    ];
+    let subtitleIndex = 0;
+    let charIndex = 0;
+    let typingForward = true;
+    function typeSubtitle() {
+      const phrase = subtitlePhrases[subtitleIndex];
+      if (typingForward) {
+        charIndex++;
+        if (charIndex > phrase.length) {
+          typingForward = false;
+          setTimeout(typeSubtitle, 1200);
+          return;
+        }
+      } else {
+        charIndex--;
+        if (charIndex < 0) {
+          typingForward = true;
+          subtitleIndex = (subtitleIndex + 1) % subtitlePhrases.length;
+          setTimeout(typeSubtitle, 400);
+          return;
+        }
+      }
+      subtitleText.textContent = phrase.substring(0, charIndex);
+      setTimeout(typeSubtitle, typingForward ? 70 : 35);
+    }
+    typeSubtitle();
+  </script>
+</body>
+</html>
